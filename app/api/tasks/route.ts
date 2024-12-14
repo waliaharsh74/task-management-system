@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
+import prisma from '../../../lib/prisma'
 import { getSession } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
@@ -14,11 +14,11 @@ export async function GET(request: NextRequest) {
   const sortBy = searchParams.get('sortBy')
   const order = searchParams.get('order') as 'asc' | 'desc'
 
-  let whereClause: any = { userId: session.user.id }
+  const whereClause: any = { userId: session.user.id }
   if (priority) whereClause.priority = parseInt(priority)
   if (status) whereClause.status = status
 
-  let orderByClause: any = {}
+  const orderByClause: any = {}
   if (sortBy === 'startTime' || sortBy === 'endTime') {
     orderByClause[sortBy] = order || 'asc'
   }
